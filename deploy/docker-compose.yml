@@ -92,7 +92,24 @@ services:
     networks:
       - network
 
-
+  meilisearch:
+    image: getmeili/meilisearch:v1.7
+    container_name: ${COMPOSE_PROJECT_NAME}-meilisearch
+    restart: unless-stopped
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+      MEILI_MASTER_KEY: ${MEILISEARCH_MASTER_KEY}
+    ports:
+      - "${MEILISEARCH_PUBLISHED_PORT:-7700}:7700"
+    volumes:
+      - meilisearch-data:/meili_data
+    networks:
+      - network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:7700/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 volumes:
   postgres-data:
     name: ${COMPOSE_PROJECT_NAME}-postgres-data
@@ -100,7 +117,8 @@ volumes:
     name: ${COMPOSE_PROJECT_NAME}-pgadmin
   redis-data:
     name: ${COMPOSE_PROJECT_NAME}-redis-data
-
+  meilisearch-data:
+    name: ${COMPOSE_PROJECT_NAME}-meilisearch-data
 
 networks:
   network:
