@@ -1,0 +1,55 @@
+upstream php-fpm {
+    server ${NGINX_FPM_HOST}:${NGINX_FPM_PORT};
+}
+
+server {
+    listen ${NGINX_PORT};
+    server_name ${NGINX_HOST};
+    root ${NGINX_ROOT};
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    error_log /var/log/nginx/backbone_error.log info;
+
+    index index.php;
+
+    charset utf-8;
+
+    location ^~ /mc2 {
+            port_in_redirect on;
+            root ${NGINX_ROOT};
+            index index.php;
+            autoindex off;
+
+            try_files $uri /mc2/index.php?$query_string;
+
+            location ~ ^/mc2/.*\.php$ {
+                root ${NGINX_ROOT};
+                fastcgi_pass php-fpm;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_param HTTP_HOST $host:$server_port;
+                include fastcgi_params;
+            }
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass php-fpm;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
