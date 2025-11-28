@@ -12,14 +12,13 @@ createServer(
             page,
             render: renderToString,
             title: (title) => (title ? `${title} - ${appName}` : appName),
-            resolve: resolvePage,
-            setup: ({ App, props, plugin }) => createSSRApp({ render: () => h(App, props) }).use(plugin),
+            resolve: (name) =>
+                resolvePageComponent(
+                    `./pages/${name}.vue`,
+                    import.meta.glob<DefineComponent>('./pages/**/*.vue'),
+                ),
+            setup: ({ App, props, plugin }) =>
+                createSSRApp({ render: () => h(App, props) }).use(plugin),
         }),
     { cluster: true },
 );
-
-function resolvePage(name: string) {
-    const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue');
-
-    return resolvePageComponent<DefineComponent>(`./pages/${name}.vue`, pages);
-}

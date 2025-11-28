@@ -7,10 +7,11 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable ,Searchable;
 
     protected $fillable = [
         'first_name',
@@ -35,6 +36,18 @@ class User extends Authenticatable
     public function address()
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id'         => $this->id,
+            'first_name' => $this->first_name,
+            'last_name'  => $this->last_name,
+            'email'      => $this->email,
+            'country'    => $this->address->country ?? null,
+            'city'       => $this->address->city ?? null,
+        ];
     }
 
     protected function casts(): array

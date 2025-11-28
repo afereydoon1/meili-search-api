@@ -1,6 +1,57 @@
+# Nina Care Setup
+
 ## Prerequisites
 
-To use the provided `make` commands on Windows, you need to have **Chocolatey** installed first, and then install **Make** via Chocolatey.
+To use the provided `make` commands on Windows, you need to have **Chocolatey** installed first, and then install **Make** via Chocolatey:
 
 ```sh
 choco install make
+```
+
+## Setup
+
+1. **Clone the repository**:
+
+```sh
+git clone https://github.com/afereydoon1/nina-care.git
+cd nina-care
+```
+
+2. **Copy environment file**:
+
+```sh
+cp .env.example .env
+```
+
+3. **Configure environment variables**  
+   Open `.env` and set all required variables (database, cache, etc.).
+
+## Build & Migrate
+
+1. **Build the project**:
+
+```sh
+make build
+```
+
+2. **Run migrations**:
+
+```sh
+make artisan cmd="migrate"
+```
+
+3. **Seed database with large dataset**:
+
+```sh
+make artisan cmd="db:seed --class=LargeUserSeeder"
+```
+
+4. **Start queue worker for seeding**:
+
+```sh
+make artisan cmd="queue:work redis --queue=seeding --sleep=1"
+```
+
+---
+
+✅ Now your project should be ready and the seeding process running.
