@@ -34,6 +34,14 @@ class UserController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return Inertia::render('users/Create',[]);
+    }
+    public function store(StoreUserRequest $request)
+    {
+
+    }
     public function edit(string $id)
     {
         $user = $this->service->findUser($id);

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import { Button } from '@/components/ui/button';
 
 const props = defineProps({
     users: Object,
@@ -24,8 +25,9 @@ watch(q, (value) => {
     <AppLayout>
         <div class="p-4">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-semibold">Users</h2>
-
+                <Link :href="'/users/create'">
+                    <Button>Create New</Button>
+                </Link>
                 <input
                     v-model="q"
                     type="text"
