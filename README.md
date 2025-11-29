@@ -60,6 +60,12 @@ make artisan cmd="db:seed --class=LargeUserSeeder"
 make artisan cmd="queue:work redis --queue=seeding --sleep=1"
 ```
 
----
+5. **Index Users to Meilisearch**
 
-✅ Now your project should be ready and the seeding process running.
+This command reindexes all users in Meilisearch:
+
+```sh
+make artisan cmd="reindex:users"
+```
+
+✅ Now your project should be ready

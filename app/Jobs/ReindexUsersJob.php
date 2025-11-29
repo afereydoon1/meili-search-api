@@ -13,25 +13,18 @@ class ReindexUsersJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $batchSize;
+    public array $ids;
 
-    /**
-     * Create a new job instance.
-     */
-    public function __construct(int $batchSize = 1000)
+    public function __construct(array $ids)
     {
-        $this->batchSize = $batchSize;
+        $this->ids = $ids;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
-
-        User::with('address')->chunk($this->batchSize, function ($users) {
-            $users->each->searchable();
-            info('Indexed batch of ' . $users->count() . ' users');
-        });
+        User::with('address')
+            ->whereIn('id', $this->ids)
+            ->get()
+            ->each->searchable();
     }
 }
