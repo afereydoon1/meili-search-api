@@ -34,6 +34,14 @@ cp .env.example .env
 make build
 ```
 
+```sh
+make up
+```
+
+```sh
+npm run dev
+```
+
 2. **Run migrations**:
 
 ```sh
