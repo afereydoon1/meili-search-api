@@ -15,7 +15,7 @@ class UserService
             : $this->repo->paginate($perPage);
     }
 
-    public function storeUser(array $data)
+    public function createUser(array $data)
     {
         return $this->repo->create($data);
     }

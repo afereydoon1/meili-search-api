@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository
 {
@@ -25,26 +26,47 @@ class UserRepository
 
     public function create(array $data)
     {
-        $user = User::create($data);
+        return DB::transaction(function () use ($data) {
 
-        if (!empty($data['address'])) {
-            $user->address()->create($data['address']);
-        }
+            $user = User::create([
+                'first_name' => $data['first_name'],
+                'last_name'  => $data['last_name'],
+                'email'      => $data['email'],
+            ]);
 
-        return $user;
+            if (!empty($data['address'])) {
+                $user->address()->create([
+                    'country'   => $data['address']['country'],
+                    'city'      => $data['address']['city'],
+                    'post_code' => $data['address']['post_code'],
+                    'street'    => $data['address']['street'],
+                ]);
+            }
+
+            return $user;
+        });
     }
+
 
     public function update(string $id, array $data)
     {
-        $user = User::findOrFail($id);
-        $user->update($data);
+        return DB::transaction(function () use ($id, $data) {
 
-        if (!empty($data['address'])) {
-            $user->address()->updateOrCreate([], $data['address']);
-        }
+            $user = User::findOrFail($id);
 
-        return $user;
+            $addressData = $data['address'] ?? null;
+            unset($data['address']);
+
+            $user->update($data);
+
+            if (!empty($addressData)) {
+                $user->address()->updateOrCreate([], $addressData);
+            }
+
+            return $user->load('address');
+        });
     }
+
 
     public function delete(string $id)
     {

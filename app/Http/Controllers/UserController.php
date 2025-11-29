@@ -40,7 +40,11 @@ class UserController extends Controller
     }
     public function store(StoreUserRequest $request)
     {
+        $user = $this->service->createUser($request->validated());
 
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'User created successfully.');
     }
     public function edit(string $id)
     {
