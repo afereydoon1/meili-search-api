@@ -64,20 +64,26 @@ watch(q, (value) => {
 
                         <td class="px-4 py-2">
                             <div class="flex gap-2">
-                                <a :href="`/users/${u.id}/edit`" class="text-blue-600">
+
+                                <Link :href="`/users/${u.id}/edit`" class="text-blue-600">
                                     <SquarePen />
-                                </a>
-                                <a :href="`/users/${u.id}`" class="text-gray-600">
+                                </Link>
+
+                                <Link :href="`/users/${u.id}`" class="text-gray-600">
                                     <Eye />
-                                </a>
-                                <form :action="`/users/${u.id}`" method="POST">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button class="text-red-600">
-                                        <Trash2 />
-                                    </button>
-                                </form>
+                                </Link>
+
+                                <button
+                                    @click="router.delete(`/users/${u.id}`)"
+                                    class="text-red-600 cursor-pointer"
+                                >
+                                    <Trash2 />
+                                </button>
+
                             </div>
                         </td>
+
+
                     </tr>
                     </tbody>
                 </table>
