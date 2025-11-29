@@ -19,11 +19,6 @@ class UserRepository
             ->paginate($perPage);
     }
 
-    public function find(string $id)
-    {
-        return User::with('address')->findOrFail($id);
-    }
-
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
@@ -47,7 +42,10 @@ class UserRepository
         });
     }
 
-
+    public function find(string $id)
+    {
+        return User::with('address')->findOrFail($id);
+    }
     public function update(string $id, array $data)
     {
         return DB::transaction(function () use ($id, $data) {
@@ -66,7 +64,6 @@ class UserRepository
             return $user->load('address');
         });
     }
-
 
     public function delete(string $id)
     {

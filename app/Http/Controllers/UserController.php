@@ -54,7 +54,6 @@ class UserController extends Controller
             'user' => $user
         ]);
     }
-
     public function update(UpdateUserRequest $request, string $id)
     {
         $this->service->updateUser($id, $request->validated());

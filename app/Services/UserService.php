@@ -20,6 +20,10 @@ class UserService
         return $this->repo->create($data);
     }
 
+    public function findUser(string $id)
+    {
+        return $this->repo->find($id);
+    }
     public function updateUser(string $id, array $data)
     {
         return $this->repo->update($id, $data);
@@ -30,9 +34,5 @@ class UserService
         return $this->repo->delete($id);
     }
 
-    public function findUser(string $id)
-    {
-        return $this->repo->find($id);
-    }
 }
 

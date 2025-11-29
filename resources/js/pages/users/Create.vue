@@ -34,7 +34,6 @@ const submit = () => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-6 max-w-4xl mx-auto">
             <h1 class="text-2xl font-bold mb-6">Create User</h1>
-
             <form @submit.prevent="submit" class="space-y-8">
                 <!-- USER INFO -->
                 <div>
