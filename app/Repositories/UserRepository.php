@@ -14,9 +14,11 @@ class UserRepository
 
     public function search(string $q, int $perPage)
     {
-        return User::search($q)
+        $users = User::search($q)
             ->take($perPage)
             ->paginate($perPage);
+        $users->getCollection()->load('address');
+        return $users;
     }
 
     public function create(array $data)
