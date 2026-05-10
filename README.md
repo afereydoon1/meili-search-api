@@ -14,7 +14,7 @@ choco install make
 
 ```sh
 git clone https://github.com/afereydoon1/meili-search-api.git
-cd nina-care
+cd meili-search-api
 ```
 
 2. **Copy environment file**:
