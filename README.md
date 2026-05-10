@@ -1,4 +1,4 @@
-# Nina Care Setup
+# Meili Search Setup
 
 ## Prerequisites
 
@@ -69,3 +69,15 @@ make artisan cmd="reindex:users"
 ```
 
 ✅ Now your project should be ready
+
+## 🤝 Contribution
+
+Pull requests are welcome. Please fork the repository and open a PR
+
+## 📄 License
+
+[MIT License](https://opensource.org/licenses/MIT)
+
+## Made By
+
+Fereydoon Salemi
