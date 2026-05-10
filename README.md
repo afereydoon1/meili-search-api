@@ -13,7 +13,7 @@ choco install make
 1. **Clone the repository**:
 
 ```sh
-git clone https://github.com/afereydoon1/nina-care.git
+git clone https://github.com/afereydoon1/meili-search-api.git
 cd nina-care
 ```
 
