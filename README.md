@@ -78,6 +78,6 @@ Pull requests are welcome. Please fork the repository and open a PR
 
 [MIT License](https://opensource.org/licenses/MIT)
 
-## Made By
+## Author
 
 Fereydoon Salemi
